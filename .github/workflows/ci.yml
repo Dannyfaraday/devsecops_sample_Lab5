@@ -69,7 +69,7 @@ jobs:
 
       - name: Deploy PyGoat
         run: |
-          docker run --rm -d -p 8000:8000 --name pygoat mytestapp:latest
+          docker run --rm -d -p 8000:8000 --name pygoat mytestapp:latest python3 /app/manage.py runserver 0.0.0.0:8000
           # give Django time to boot before scanning
           sleep 15
           curl -sSf http://localhost:8000 || (docker logs pygoat && exit 1)
