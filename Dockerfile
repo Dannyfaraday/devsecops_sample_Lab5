@@ -5,10 +5,11 @@ WORKDIR /app
 
 
 # dependencies for psycopg2
-RUN apt-get update && apt-get install --no-install-recommends -y dnsutils libpq-dev=11.16-0+deb10u1 python3-dev=3.7.3-1 \
+RUN sed -i 's|http://deb.debian.org/debian|http://archive.debian.org/debian|g; s|http://security.debian.org/debian-security|http://archive.debian.org/debian-security|g' /etc/apt/sources.list \
+ && apt-get update -o Acquire::Check-Valid-Until=false \
+ && apt-get install --no-install-recommends -y dnsutils libpq-dev=11.16-0+deb10u1 python3-dev=3.7.3-1 \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
-
 
 # Set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
